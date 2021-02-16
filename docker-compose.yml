@@ -1,0 +1,41 @@
+﻿version: '3'
+
+services:
+  host01:
+    container_name: host01
+    image: alpine
+    mac_address: 02:42:c0:a8:84:01
+    networks:
+      my_macvlan:
+        ipv4_address: 192.168.1.1
+        aliases:
+          - "host01"
+  host02:
+    container_name: host02
+    image: alpine
+    mac_address: 02:42:c0:a8:84:02
+    networks:
+      my_macvlan:
+        ipv4_address: 192.168.1.2
+        aliases:
+          - "host02"
+  host03:
+    container_name: host03
+    image: alpine
+    mac_address: 02:42:c0:a8:84:03
+    networks:
+      my_macvlan:
+        ipv4_address: 192.168.1.3
+        aliases:
+          - "host03"
+
+networks:
+  my_macvlan:
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
